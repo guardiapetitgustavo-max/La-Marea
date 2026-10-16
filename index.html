@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="La Marea, marisquería en Ensenada desde 1987: ceviches, tostadas y pescado a la leña. Reserva por WhatsApp.">
+<title>La Marea Ensenada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: foto grande de portada, franja de datos, carta en dos columnas, galería, historia, reserva por WhatsApp.
+   Diseño claro a propósito (un solo tema): blanco espuma, azul profundo del Pacífico y un toque coral. */
+:root {
+  --bg: #fbfaf7;
+  --soft: #f1efe9;
+  --ink: #12263a;
+  --text: #33465a;
+  --sea: #0b6e8a;
+  --coral: #ff5a36;
+  --turq: #12b5c4;
+  --sun: #ffc23d;
+  --deep: #0a3550;
+  --white: #ffffff;
+  --wa: #1f9d55;
+  --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 14px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font: 400 1.0625rem/1.65 var(--sans); }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { color: var(--ink); text-wrap: balance; }
+h2 { font: 400 clamp(2.5rem, 1.6rem + 3.2vw, 4.4rem)/1.02 var(--serif); }
+h2 em { color: var(--coral); }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; border-radius: 6px; }
+.wrap {
+  width: 100%; max-width: 1160px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.section { padding-block: clamp(72px, 9vw, 120px); }
+.intro { max-width: 58ch; margin-top: 16px; font-size: 1.125rem; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 17px 30px; border-radius: 999px; border: 2px solid transparent;
+  font: 600 1rem/1 var(--sans); text-decoration: none; cursor: pointer;
+  transition: transform .2s ease, background-color .2s ease, color .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(.98); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn-wa { background: var(--wa); color: var(--white); }
+.btn-wa:hover { background: #188a49; box-shadow: 0 10px 30px rgba(31,157,85,.45); }
+.btn-sun { background: var(--sun); color: var(--ink); }
+.btn-sun:hover { box-shadow: 0 10px 30px rgba(255,194,61,.5); }
+.btn-light { border-color: rgba(255,255,255,.75); color: var(--white); }
+.btn-light:hover { background: var(--white); color: var(--ink); }
+
+/* Barra */
+.bar { position: absolute; top: 0; left: 0; right: 0; z-index: 5; padding-top: env(safe-area-inset-top, 0px); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.logo { font: 400 1.6rem/1 var(--serif); color: var(--white); text-decoration: none; }
+.nav { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.nav a { color: var(--white); text-decoration: none; font-weight: 500; opacity: .9; }
+.nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+
+/* Portada */
+.hero { position: relative; min-height: clamp(600px, 92svh, 900px); display: flex; align-items: flex-end; color: var(--white); overflow: hidden; background: var(--ink); }
+.hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,24,38,.72) 0%, rgba(10,24,38,.25) 60%, rgba(10,24,38,0) 100%), linear-gradient(180deg, rgba(10,24,38,.5) 0%, rgba(10,24,38,.1) 35%, rgba(10,24,38,.7) 100%); }
+.hero .wrap { position: relative; z-index: 2; padding-block: 120px clamp(56px, 8vw, 96px); }
+.hero-place { display: inline-block; font-weight: 700; background: var(--coral); color: var(--white); padding: 7px 14px; border-radius: 999px; font-size: .95rem; }
+.hero h1 { color: var(--white); font: 400 clamp(4.4rem, 2rem + 10vw, 10.5rem)/0.9 var(--serif); margin-top: 14px; letter-spacing: -.01em; }
+.hero h1 em { color: var(--sun); }
+.seal { position: absolute; z-index: 3; right: clamp(20px, 6vw, 90px); top: clamp(110px, 18vh, 170px); width: clamp(120px, 14vw, 180px); aspect-ratio: 1; border-radius: 50%; background: var(--sun); color: var(--ink); display: grid; place-items: center; }
+.seal .ring { position: absolute; inset: 0; width: 100%; height: 100%; }
+.seal text { font: 700 15px var(--sans); letter-spacing: 2.4px; fill: currentColor; }
+.seal .icon { width: 38%; height: 38%; color: var(--coral); }
+.hero p.sub { margin-top: 18px; font-size: clamp(1.1rem, 1rem + .4vw, 1.3rem); max-width: 40ch; color: rgba(255,255,255,.92); }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+/* Franja animada */
+.marquee { background: var(--coral); color: var(--white); overflow: hidden; padding-block: 16px; }
+.track { display: flex; gap: 28px; width: max-content; align-items: center; font: italic 400 clamp(1.5rem, 1.2rem + 1.2vw, 2.3rem)/1 var(--serif); white-space: nowrap; }
+.track i { font-style: normal; color: var(--sun); font-size: .8em; }
+
+/* Franja de datos */
+.facts { background: var(--deep); color: rgba(255,255,255,.85); }
+.facts .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding-block: 28px; }
+.fact { display: flex; gap: 14px; align-items: flex-start; min-width: 0; }
+.fact svg { width: 30px; height: 30px; flex: none; color: var(--sun); margin-top: 2px; }
+.fact b { display: block; color: var(--white); font-weight: 600; }
+
+/* Carta */
+.menu-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+.chip { font: 600 .95rem var(--sans); padding: 10px 18px; border-radius: 999px; border: 0; background: var(--soft); color: var(--ink); cursor: pointer; transition: background-color .2s ease, color .2s ease; }
+.chip:hover { background: #e4e1d8; }
+.chip { font-size: 1rem; padding: 12px 22px; }
+.chip[aria-selected="true"] { background: var(--coral); color: var(--white); box-shadow: 0 8px 20px rgba(255,90,54,.3); }
+.menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 64px; margin-top: 36px; }
+.dish { padding: 20px; margin-inline: -20px; border-radius: 14px; transition: background-color .2s ease, transform .2s ease; }
+.dish:hover { background: #fff1ea; transform: translateX(4px); }
+.dish-top { display: flex; align-items: baseline; gap: 12px; }
+.dish h3 { font: 700 1.2rem/1.3 var(--sans); }
+.dots { flex: 1; border-bottom: 2px dotted #c9c4b8; transform: translateY(-5px); min-width: 24px; }
+.price { font: 400 1.6rem/1 var(--serif); color: var(--coral); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dish p { margin-top: 6px; max-width: 46ch; }
+.badge { display: inline-block; margin-left: 8px; font: 700 .72rem/1 var(--sans); padding: 5px 9px; border-radius: 999px; vertical-align: 2px; letter-spacing: .02em; }
+.badge.casa { background: #fde6df; color: #a63b22; }
+.badge.pica { background: #e2eef4; color: var(--sea); }
+.menu-note { margin-top: 28px; color: var(--text); font-size: .95rem; }
+
+/* Pesca del día */
+.catch { background: var(--deep); color: rgba(255,255,255,.85); }
+.catch h2 { color: var(--white); }
+.catch h2 em { color: var(--sun); }
+.catch .intro { color: rgba(255,255,255,.85); }
+.wave-wrap { background: var(--bg); line-height: 0; }
+.wave { display: block; width: 100%; height: 60px; }
+.wave-wrap.deep path { fill: var(--deep); }
+.wave-wrap.ink path { fill: var(--ink); }
+.catch-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.catch-photo { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 5; transform: rotate(-2deg); box-shadow: 18px 18px 0 var(--turq); }
+.catch-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+.catch-photo:hover img { transform: scale(1.04); }
+.board { margin-top: 28px; background: var(--white); color: var(--text); border-radius: var(--radius); padding: 8px 24px; }
+.board li { display: flex; justify-content: space-between; gap: 16px; padding-block: 16px; align-items: baseline; }
+.board li + li { border-top: 1px solid #ece8df; }
+.board ul { list-style: none; margin: 0; padding: 0; }
+.board b { color: var(--ink); font-weight: 600; }
+.board span { display: block; font-size: .92rem; }
+.board .kg { font: 400 1.45rem var(--serif); color: var(--coral); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.board .out b, .board .out .kg { text-decoration: line-through; color: #8a95a1; }
+
+/* Galería */
+.gallery { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: 260px 260px; gap: 14px; margin-top: 40px; }
+.gallery figure { margin: 0; border-radius: var(--radius); overflow: hidden; position: relative; }
+.gallery figure:first-child { grid-row: span 2; }
+.gallery figure:nth-child(4) { grid-column: span 2; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
+.gallery figure:hover img { transform: scale(1.05); }
+.gallery figcaption { position: absolute; left: 12px; bottom: 12px; background: var(--sun); color: var(--ink); font-size: .85rem; font-weight: 600; padding: 6px 12px; border-radius: 999px; }
+
+/* Historia */
+.story { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.story .text { display: grid; gap: 18px; }
+.quote { font: italic 400 clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem)/1.25 var(--serif); color: var(--sea); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.stats div { border-radius: 16px; padding: 18px 16px; color: var(--white); font-weight: 600; font-size: .95rem; line-height: 1.3; transition: transform .2s ease; }
+.stats div:hover { transform: translateY(-4px) rotate(-1deg); }
+.stats div:nth-child(1) { background: var(--coral); }
+.stats div:nth-child(2) { background: var(--sea); }
+.stats div:nth-child(3) { background: var(--sun); color: var(--ink); }
+.stats b { display: block; font: 400 3rem/1 var(--serif); margin-bottom: 6px; }
+.story-photo { border-radius: 999px 999px var(--radius) var(--radius); overflow: hidden; aspect-ratio: 4 / 5; box-shadow: -18px 18px 0 var(--sun); }
+.story-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Reserva */
+.reserve { background: var(--ink); color: rgba(255,255,255,.85); }
+.reserve h2 { color: var(--white); }
+.reserve h2 em { color: var(--sun); }
+.reserve-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+.hours { margin-top: 28px; display: grid; gap: 10px; max-width: 380px; }
+.hours div { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,.14); font-variant-numeric: tabular-nums; }
+.hours b { color: var(--white); font-weight: 600; }
+.address { margin-top: 28px; }
+.address b { color: var(--white); display: block; }
+.address a { color: var(--sun); }
+.card { background: var(--white); color: var(--text); border-radius: 20px; padding: clamp(24px, 4vw, 40px); }
+.card h3 { font: 400 1.9rem/1.1 var(--serif); }
+.card > p { margin-top: 8px; }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label { font-weight: 600; font-size: .92rem; color: var(--ink); }
+input, select, textarea {
+  font: inherit; width: 100%; padding: 13px 14px; border-radius: 10px;
+  border: 1.5px solid #dcd8ce; background: var(--bg); color: var(--ink);
+}
+textarea { min-height: 80px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--sea); box-shadow: 0 0 0 3px rgba(29,92,122,.18); }
+.preview { grid-column: 1 / -1; background: #e9f6ee; border-radius: 12px; padding: 14px 16px; font-size: .95rem; color: #1d4a31; }
+.preview b { display: block; font-size: .8rem; color: #2a6b45; margin-bottom: 4px; }
+form .btn-wa { grid-column: 1 / -1; padding-block: 17px; font-size: 1.05rem; }
+.err { grid-column: 1 / -1; color: #b23a1f; font-weight: 600; font-size: .95rem; }
+
+/* Pie */
+footer { background: #0b1a29; color: rgba(255,255,255,.7); font-size: .95rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; padding-block: 36px; }
+footer .logo { font-size: 1.4rem; }
+.credits { flex-basis: 100%; font-size: .82rem; color: rgba(255,255,255,.55); }
+.credits a { color: rgba(255,255,255,.75); }
+
+/* Botón flotante de WhatsApp */
+.wa-float {
+  position: fixed; z-index: 20;
+  right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  width: 60px; height: 60px; border-radius: 50%; background: var(--wa); color: var(--white);
+  display: grid; place-items: center; box-shadow: 0 8px 24px rgba(10,40,25,.3);
+  transition: transform .2s ease;
+}
+.wa-float:hover { transform: scale(1.08); }
+.wa-float svg { width: 32px; height: 32px; }
+
+@media (max-width: 860px) {
+  .nav { display: none; }
+  .facts .wrap { grid-template-columns: 1fr; gap: 16px; }
+  .menu-grid { grid-template-columns: 1fr; gap: 0; }
+  .catch-grid, .story, .reserve-grid { grid-template-columns: 1fr; }
+  .catch-photo { aspect-ratio: 4 / 3; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 160px 160px; }
+  .gallery figure:first-child { grid-column: span 2; grid-row: auto; }
+  .gallery figure:nth-child(4) { grid-column: span 2; }
+  .story-photo { order: -1; aspect-ratio: 4 / 3; border-radius: var(--radius); }
+  .seal { top: 92px; right: 16px; width: 104px; }
+  .seal text { font-size: 17px; }
+  .stats b { font-size: 2.2rem; }
+  .stats div { padding: 14px 12px; font-size: .85rem; }
+  .catch-photo, .story-photo { box-shadow: 10px 10px 0 var(--turq); }
+}
+@media (max-width: 520px) {
+  form { grid-template-columns: 1fr; }
+  .hero .ctas .btn { flex: 1 1 100%; }
+  .board { padding: 4px 16px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero img { animation: zoom 14s ease-out both; }
+  @keyframes zoom { from { transform: scale(1.08); } to { transform: none; } }
+  .hero .wrap > * { animation: up .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero .wrap > *:nth-child(2) { animation-delay: .1s; }
+  .hero .wrap > *:nth-child(3) { animation-delay: .2s; }
+  .hero .wrap > *:nth-child(4) { animation-delay: .3s; }
+  @keyframes up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .menu-grid.swap .dish { animation: up .45s ease both; }
+  .seal .ring { animation: spin 18s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .track { animation: slide 32s linear infinite; }
+  @keyframes slide { to { transform: translateX(calc(-50% - 14px)); } }
+  .wa-float { animation: pulse 2.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 8px 24px rgba(10,40,25,.3), 0 0 0 0 rgba(31,157,85,.5); } 50% { box-shadow: 0 8px 24px rgba(10,40,25,.3), 0 0 0 14px rgba(31,157,85,0); } }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.29Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v4.5l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 21s-7-6.2-7-11.5a7 7 0 1 1 14 0C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/></symbol>
+  <symbol id="i-fish" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 12c3-4.5 7-6 11-5 2.6.7 4.6 2.6 6 5-1.4 2.4-3.4 4.3-6 5-4 1-8-.5-11-5Zm0 0-1.5-3m1.5 3-1.5 3M16 11v.01"/></symbol>
+</svg>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#inicio">La Marea</a>
+    <ul class="nav">
+      <li><a href="#carta">Carta</a></li>
+      <li><a href="#pesca">Pesca del día</a></li>
+      <li><a href="#historia">Nosotros</a></li>
+      <li><a href="#reservar">Reservar</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <img src="assets/stall-in-fish-market-ensenada-bc-mexico.jpg" width="975" height="1300" alt="Puesto de mariscos con camarón, pulpo y pescado del día en el mercado de Ensenada">
+  <div class="seal" aria-hidden="true">
+    <svg class="ring" viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
+      <text><textPath href="#circ">MARISCOS FRESCOS · DESDE 1987 · ENSENADA · </textPath></text></svg>
+    <svg class="icon"><use href="#i-fish"/></svg>
+  </div>
+  <div class="wrap">
+    <p class="hero-place">Marisquería en Ensenada, Baja California</p>
+    <h1>La <em>Marea</em></h1>
+    <p class="sub">Ceviches, tostadas y pescado a la leña con lo que llega cada mañana al muelle. Desde 1987.</p>
+    <div class="ctas">
+      <a class="btn btn-wa wa-link" href="https://wa.me/526461780318?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20La%20Marea" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Reservar por WhatsApp</a>
+      <a class="btn btn-sun" href="#carta">Ver la carta</a>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="track"><span>Ceviche de sierra</span><i>✦</i><span>Aguachile verde</span><i>✦</i><span>Tostada de atún</span><i>✦</i><span>Pescado zarandeado</span><i>✦</i><span>Tacos de pescado</span><i>✦</i><span>Callo de hacha</span><i>✦</i><span>Ceviche de sierra</span><i>✦</i><span>Aguachile verde</span><i>✦</i><span>Tostada de atún</span><i>✦</i><span>Pescado zarandeado</span><i>✦</i><span>Tacos de pescado</span><i>✦</i><span>Callo de hacha</span><i>✦</i></div></div>
+<div class="facts">
+  <div class="wrap">
+    <div class="fact"><svg aria-hidden="true"><use href="#i-clock"/></svg><div><b id="today">Abierto hoy</b><span id="todayHours">12:00 a 23:00</span></div></div>
+    <div class="fact"><svg aria-hidden="true"><use href="#i-pin"/></svg><div><b>Av. López Mateos 318</b>Zona Centro, Ensenada</div></div>
+    <div class="fact"><svg aria-hidden="true"><use href="#i-fish"/></svg><div><b>Pesca del día</b>Llegó al muelle a las 6:40</div></div>
+  </div>
+</div>
+
+<main>
+  <section class="section" id="carta">
+    <div class="wrap">
+      <div class="menu-head">
+        <div>
+          <h2>Nuestra <em>carta</em></h2>
+          <p class="intro">Todo se prepara al momento. Precios en pesos mexicanos, IVA incluido.</p>
+        </div>
+      </div>
+      <div class="chips" role="tablist" aria-label="Secciones de la carta" id="chips"></div>
+      <div class="menu-grid" id="menu" role="tabpanel"></div>
+      <p class="menu-note">Las tostadas también se sirven en hoja de lechuga. Avísanos si tienes alergia a algún marisco.</p>
+    </div>
+  </section>
+
+  <div class="wave-wrap deep" aria-hidden="true"><svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,40 C240,0 480,60 720,30 C960,0 1200,50 1440,20 L1440,60 L0,60 Z"/></svg></div>
+  <section class="section catch" id="pesca">
+    <div class="wrap catch-grid">
+      <div class="catch-photo"><img src="assets/cabrillas.jpg" width="867" height="1300" alt="Cabrillas frescas en el mercado de Ensenada" loading="lazy"></div>
+      <div>
+        <h2>Pesca <em>del día</em></h2>
+        <p class="intro">Lo compramos directo a las pangas de la bahía. Se prepara como tú quieras: zarandeado, al mojo de ajo, empapelado o frito. Precio por kilo.</p>
+        <div class="board">
+          <ul>
+            <li><div><b>Totoaba de granja</b><span>San Felipe</span></div><span class="kg">$620 / kg</span></li>
+            <li><div><b>Lenguado</b><span>Bahía de Todos Santos</span></div><span class="kg">$540 / kg</span></li>
+            <li><div><b>Cabrilla</b><span>Bahía de Todos Santos</span></div><span class="kg">$480 / kg</span></li>
+            <li><div><b>Langosta roja</b><span>Puerto Nuevo</span></div><span class="kg">$1,150 / kg</span></li>
+            <li class="out"><div><b>Erizo</b><span>Agotado, vuelve el sábado</span></div><span class="kg">$720 / kg</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>El sabor del <em>puerto</em></h2>
+      <p class="intro">Ensenada huele a mar, a limón y a tortilla recién hecha. Así se ve el mercado donde compramos cada mañana.</p>
+      <div class="gallery">
+        <figure><img src="assets/stall-in-fish-market-ensenada-bc-mexico.jpg" width="975" height="1300" alt="Puesto de mariscos con camarón, pulpo y filetes en el mercado de Ensenada" loading="lazy"><figcaption>Mercado de mariscos</figcaption></figure>
+        <figure><img src="assets/ensenada-fish-market-2.jpg" width="1300" height="892" alt="Pescados colgados en el mercado de Ensenada" loading="lazy"><figcaption>Pesca fresca</figcaption></figure>
+        <figure><img src="assets/cabrillas.jpg" width="867" height="1300" alt="Cabrillas con letrero escrito a mano" loading="lazy"><figcaption>Cabrilla</figcaption></figure>
+        <figure><img src="assets/seaweed-in-ensenada-baja-california.jpg" width="1300" height="867" alt="Sargazo en la costa de Ensenada" loading="lazy"><figcaption>La costa de Ensenada</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="historia" style="padding-top:0">
+    <div class="wrap story">
+      <div class="text">
+        <h2>Tres generaciones <em>frente al mar</em></h2>
+        <p class="quote">“Si no llegó esta mañana, no está en el plato.”</p>
+        <p>Don Ramiro Osuna abrió La Marea en 1987 como un carrito de tostadas frente al mercado de Ensenada. Hoy la cocina la lleva su nieta Lucía, con la misma regla de siempre: comprar directo a los pescadores y no congelar nada.</p>
+        <p>Las salsas se muelen en molcajete y el pescado zarandeado se asa sobre leña de mezquite.</p>
+        <div class="stats">
+          <div><b>38</b>años en el puerto</div>
+          <div><b>12</b>pangas que nos surten</div>
+          <div><b>0</b>congeladores</div>
+        </div>
+      </div>
+      <div class="story-photo"><img src="assets/the-condiments-at-the-fish-taco-stand.jpg" width="1300" height="870" alt="Salsas en la barra de un puesto de tacos de pescado en Ensenada" loading="lazy"></div>
+    </div>
+  </section>
+
+  <div class="wave-wrap ink" aria-hidden="true"><svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,10 1440,35 L1440,60 L0,60 Z"/></svg></div>
+  <section class="section reserve" id="reservar">
+    <div class="wrap reserve-grid">
+      <div>
+        <h2>Reserva tu <em>mesa</em></h2>
+        <p class="intro">Llena los datos y te abrimos WhatsApp con el mensaje listo. Solo tienes que tocar enviar y te confirmamos.</p>
+        <div class="hours">
+          <div><span>Lunes</span><b>Cerrado</b></div>
+          <div><span>Martes a jueves</span><b>12:00 – 21:00</b></div>
+          <div><span>Viernes y sábado</span><b>12:00 – 23:00</b></div>
+          <div><span>Domingo</span><b>11:00 – 19:00</b></div>
+        </div>
+        <p class="address"><b>Av. López Mateos 318, Zona Centro, Ensenada, B.C.</b>Teléfono y WhatsApp: 646 178 0318 · <a href="https://www.google.com/maps/search/?api=1&query=Av.+L%C3%B3pez+Mateos+318+Ensenada" target="_blank" rel="noopener">Ver en el mapa</a></p>
+      </div>
+      <div class="card">
+        <h3>Tus datos</h3>
+        <p>Te respondemos en minutos durante el horario de servicio.</p>
+        <form id="form" novalidate>
+          <div class="field full"><label for="nombre">Nombre</label><input id="nombre" autocomplete="name" placeholder="Ej. Ana Gutiérrez"></div>
+          <div class="field"><label for="personas">Personas</label>
+            <select id="personas"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>8</option><option>10</option><option value="más de 10">Más de 10</option></select></div>
+          <div class="field"><label for="dia">Día</label><select id="dia"></select></div>
+          <div class="field"><label for="hora">Hora</label>
+            <select id="hora"><option>13:00</option><option selected>14:00</option><option>15:00</option><option>16:00</option><option>18:00</option><option>19:00</option><option>20:00</option></select></div>
+          <div class="field"><label for="zona">Lugar</label>
+            <select id="zona"><option>Sin preferencia</option><option>Terraza</option><option>Adentro</option></select></div>
+          <div class="field full"><label for="notas">Comentarios (opcional)</label><textarea id="notas" placeholder="Cumpleaños, silla para bebé, alergias…"></textarea></div>
+          <div class="preview" id="preview" aria-live="polite"><b>Mensaje que se enviará</b><span id="previewText"></span></div>
+          <p class="err" id="err" hidden></p>
+          <a class="btn btn-wa" id="send" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Enviar por WhatsApp</a>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="logo">La Marea</span>
+    <span>Av. López Mateos 318, Zona Centro, Ensenada, B.C. · 646 178 0318</span>
+    <span>© 2026 La Marea Marisquería</span>
+    <p class="credits">Fotos del mercado y la costa de Ensenada (no del restaurante), vía Wikimedia Commons: <a href="https://commons.wikimedia.org/w/index.php?curid=64200772">puesto de mariscos</a> por Adam Jones, CC BY-SA 2.0; <a href="https://commons.wikimedia.org/w/index.php?curid=19279002">pescados</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=20410377">cabrillas</a> y <a href="https://commons.wikimedia.org/w/index.php?curid=40606102">sargazo</a> por Tomascastelazo, CC BY-SA 3.0 y 4.0; <a href="https://commons.wikimedia.org/w/index.php?curid=75513763">salsas en el puesto de tacos</a>, CC BY-SA 2.0.</p>
+  </div>
+</footer>
+
+<a class="wa-float wa-link" href="https://wa.me/526461780318?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20La%20Marea" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
+
+<script>
+// Número de WhatsApp del restaurante: 52 (México) + 10 dígitos. Cámbialo aquí por el número real.
+const WHATSAPP = "526461780318";
+
+const carta = {
+  "Crudos": [
+    ["Ceviche de sierra", "Sierra curada en limón con pepino, cebolla morada y chile serrano.", 165, "casa"],
+    ["Aguachile verde", "Camarón crudo en limón, serrano y cilantro.", 210, "pica"],
+    ["Callo de hacha", "Láminas de callo con salsa negra, aguacate y chiltepín.", 285],
+    ["Coctel campechano", "Camarón, pulpo y ostión en jugo de tomate con aguacate.", 230]
+  ],
+  "Tostadas": [
+    ["Tostada de atún", "Atún aleta amarilla, salsa macha y ajonjolí tostado.", 110, "casa"],
+    ["Tostada de pulpo", "Pulpo a la plancha, mayonesa de chipotle y col morada.", 95],
+    ["Tostada de jaiba", "Jaiba desmenuzada con mayonesa de limón.", 90],
+    ["Tostada mixta", "Ceviche de pescado, camarón y pulpo.", 105]
+  ],
+  "Platos fuertes": [
+    ["Pescado zarandeado", "Medio pescado a la leña de mezquite con adobo de chiles secos.", 380, "casa"],
+    ["Tacos de pescado", "Capeados estilo Ensenada, con col, crema y pico de gallo. Orden de tres.", 135],
+    ["Camarones al mojo", "Camarón grande en ajo y mantequilla, con arroz.", 295],
+    ["Caldo de mariscos", "Caldo rojo con pescado, camarón, almeja y jaiba.", 245, "pica"]
+  ],
+  "Bebidas": [
+    ["Agua de jamaica", "Jarra de un litro.", 70],
+    ["Michelada", "Cerveza clara, limón, sal y salsas de la casa.", 95],
+    ["Vino del Valle de Guadalupe", "Copa de blanco. Pregunta por la etiqueta de la semana.", 140, "casa"],
+    ["Margarita de tamarindo", "Tequila blanco, tamarindo y chile en polvo.", 150]
+  ]
+};
+const chips = document.getElementById("chips"), menu = document.getElementById("menu");
+const badge = t => t === "casa" ? '<span class="badge casa">De la casa</span>' : t === "pica" ? '<span class="badge pica">Pica</span>' : "";
+function show(cat, animate) {
+  chips.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-selected", c.dataset.cat === cat));
+  menu.innerHTML = carta[cat].map(([n, d, p, t]) => `
+    <article class="dish">
+      <div class="dish-top"><h3>${n}${badge(t)}</h3><span class="dots"></span><span class="price">$${p}</span></div>
+      <p>${d}</p>
+    </article>`).join("");
+  menu.classList.toggle("swap", !!animate);
+}
+Object.keys(carta).forEach(cat => {
+  const b = document.createElement("button");
+  b.className = "chip"; b.type = "button"; b.setAttribute("role", "tab"); b.dataset.cat = cat; b.textContent = cat;
+  b.addEventListener("click", () => show(cat, true));
+  chips.appendChild(b);
+});
+show("Crudos");
+
+// Horario de hoy
+(function () {
+  const h = { 0: "11:00 a 19:00", 1: null, 2: "12:00 a 21:00", 3: "12:00 a 21:00", 4: "12:00 a 21:00", 5: "12:00 a 23:00", 6: "12:00 a 23:00" }[new Date().getDay()];
+  document.getElementById("today").textContent = h ? "Abierto hoy" : "Hoy lunes cerramos";
+  document.getElementById("todayHours").textContent = h || "Te esperamos de martes a domingo";
+})();
+
+// Enlaces de WhatsApp con el número configurado
+document.querySelectorAll(".wa-link").forEach(a => a.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola, quiero reservar una mesa en La Marea")}`);
+
+// Reserva: arma el mensaje y el enlace en vivo
+(function () {
+  const $ = id => document.getElementById(id);
+  const dia = $("dia"), send = $("send"), err = $("err");
+  const base = new Date();
+  for (let i = 0, n = 0; n < 12; i++) {
+    const d = new Date(base); d.setDate(base.getDate() + i);
+    if (d.getDay() === 1) continue;
+    const label = d.toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
+    const o = document.createElement("option");
+    o.value = label; o.textContent = (i === 0 ? "Hoy, " : i === 1 ? "Mañana, " : "") + label;
+    dia.appendChild(o); n++;
+  }
+  function message() {
+    const nombre = $("nombre").value.trim() || "(tu nombre)";
+    let m = `Hola, soy ${nombre}. Quiero reservar una mesa para ${$("personas").value} el ${dia.value} a las ${$("hora").value}.`;
+    if ($("zona").value !== "Sin preferencia") m += ` De preferencia en ${$("zona").value.toLowerCase()}.`;
+    const notas = $("notas").value.trim();
+    if (notas) m += ` Comentarios: ${notas}`;
+    return m;
+  }
+  function update() {
+    $("previewText").textContent = message();
+    send.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message())}`;
+  }
+  $("form").addEventListener("input", () => { err.hidden = true; update(); });
+  $("form").addEventListener("change", update);
+  send.addEventListener("click", e => {
+    if (!$("nombre").value.trim()) {
+      e.preventDefault(); err.textContent = "Escribe tu nombre para la reserva."; err.hidden = false; $("nombre").focus();
+    }
+  });
+  $("form").addEventListener("submit", e => e.preventDefault());
+  update();
+})();
+</script>
+</body>
+</html>
